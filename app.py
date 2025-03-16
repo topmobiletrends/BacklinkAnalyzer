@@ -1,19 +1,17 @@
 from flask import Flask, request, render_template, send_file
-import requests
 import pandas as pd
 
 app = Flask(__name__)
 
-# Function to fetch backlinks (dummy data for now)
+# Dummy backlink data for testing
 def fetch_backlinks(domain):
-    dummy_data = [
+    return [
         {"url": "https://example1.com", "anchor": "click here", "dr": 50, "spam_score": 3},
         {"url": "https://example2.com", "anchor": "visit us", "dr": 20, "spam_score": 8},
         {"url": "https://example3.com", "anchor": "learn more", "dr": 70, "spam_score": 2},
     ]
-    return dummy_data
 
-# Function to identify toxic links
+# Identify toxic links
 def identify_toxic_links(backlinks):
     toxic_links = []
     for link in backlinks:
@@ -21,7 +19,7 @@ def identify_toxic_links(backlinks):
             toxic_links.append(link)
     return toxic_links
 
-# Function to export data to CSV
+# Export backlinks to CSV
 def export_to_csv(backlinks, filename="backlinks.csv"):
     df = pd.DataFrame(backlinks)
     df.to_csv(filename, index=False)
