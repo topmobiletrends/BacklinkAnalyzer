@@ -4,9 +4,8 @@ import pandas as pd
 
 app = Flask(__name__)
 
-# Function to fetch backlinks (we'll use a dummy API for now)
+# Function to fetch backlinks (dummy data for now)
 def fetch_backlinks(domain):
-    # This is a dummy example. Replace with a real API like Ahrefs later.
     dummy_data = [
         {"url": "https://example1.com", "anchor": "click here", "dr": 50, "spam_score": 3},
         {"url": "https://example2.com", "anchor": "visit us", "dr": 20, "spam_score": 8},
