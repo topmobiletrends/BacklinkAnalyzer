@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, send_file
-import pandas as pd
+import csv
 
 app = Flask(__name__)
 
@@ -21,8 +21,11 @@ def identify_toxic_links(backlinks):
 
 # Export backlinks to CSV
 def export_to_csv(backlinks, filename="backlinks.csv"):
-    df = pd.DataFrame(backlinks)
-    df.to_csv(filename, index=False)
+    keys = backlinks[0].keys()  # Get the keys (column names) from the first row
+    with open(filename, mode="w", newline="") as file:
+        writer = csv.DictWriter(file, fieldnames=keys)
+        writer.writeheader()
+        writer.writerows(backlinks)
 
 # Homepage
 @app.route("/", methods=["GET", "POST"])
