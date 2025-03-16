@@ -11,6 +11,7 @@ def fetch_backlinks(domain):
         print(f"Fetching backlinks for domain: {domain}")  # Debugging statement
         response = requests.get(mock_api_url)
         print(f"API Response Status Code: {response.status_code}")  # Debugging statement
+        print(f"API Response Content: {response.text}")  # Debugging statement
         if response.status_code == 200:
             data = response.json()
             print(f"API Response Data: {data}")  # Debugging statement
@@ -48,7 +49,9 @@ def index():
         domain = request.form["domain"]
         print(f"Form submitted with domain: {domain}")  # Debugging statement
         backlinks = fetch_backlinks(domain)
+        print(f"Backlinks fetched: {backlinks}")  # Debugging statement
         toxic_links = identify_toxic_links(backlinks)
+        print(f"Toxic links identified: {toxic_links}")  # Debugging statement
         export_to_csv(backlinks)
         return render_template("results.html", backlinks=backlinks, toxic_links=toxic_links)
     return render_template("index.html")
