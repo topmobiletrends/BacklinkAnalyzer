@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Results - Backlink Analyzer</title>
+</head>
+<body>
+    <h1>Analysis Results</h1>
+    <h2>Backlinks</h2>
+    <ul>
+        {% for link in backlinks %}
+        <li>
+            <strong>URL:</strong> {{ link.url }}<br>
+            <strong>Anchor:</strong> {{ link.anchor }}<br>
+            <strong>Domain Rating (DR):</strong> {{ link.dr }}<br>
+            <strong>Spam Score:</strong> {{ link.spam_score }}
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Toxic Links</h2>
+    <ul>
+        {% for link in toxic_links %}
+        <li>
+            <strong>URL:</strong> {{ link.url }}<br>
+            <strong>Anchor:</strong> {{ link.anchor }}<br>
+            <strong>Domain Rating (DR):</strong> {{ link.dr }}<br>
+            <strong>Spam Score:</strong> {{ link.spam_score }}
+        </li>
+        {% endfor %}
+    </ul>
+
+    <a href="/download">Download Backlink Data as CSV</a><br>
+    <a href="/">Analyze Another Domain</a>
+</body>
+</html>
