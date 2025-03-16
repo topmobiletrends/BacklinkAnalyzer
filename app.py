@@ -1,15 +1,26 @@
 from flask import Flask, request, render_template, send_file
+import requests
 import csv
 
 app = Flask(__name__)
 
-# Dummy backlink data for testing
+# Fetch backlinks from the Postman Mock API
 def fetch_backlinks(domain):
-    return [
-        {"url": "https://example1.com", "anchor": "click here", "dr": 50, "spam_score": 3},
-        {"url": "https://example2.com", "anchor": "visit us", "dr": 20, "spam_score": 8},
-        {"url": "https://example3.com", "anchor": "learn more", "dr": 70, "spam_score": 2},
-    ]
+    mock_api_url = "https://8708051d-256c-45b7-9bc7-6d5b783e9cd0.mock.pstmn.io/"  # Your mock server URL
+    try:
+        response = requests.get(mock_api_url)
+        if response.status_code == 200:
+            data = response.json()
+            # Simulate dynamic behavior by including the domain in the response
+            for i, link in enumerate(data.get("backlinks", [])):
+                link["url"] = f"https://{domain}/backlink{i+1}"  # Fix URL formatting
+            return data.get("backlinks", [])
+        else:
+            print(f"Error fetching data: {response.status_code}")
+            return []
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return []
 
 # Identify toxic links
 def identify_toxic_links(backlinks):
