@@ -31,11 +31,18 @@ def export_to_csv(backlinks, filename="backlinks.csv"):
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
-        domain = request.form["domain"]
-        backlinks = fetch_backlinks(domain)
-        toxic_links = identify_toxic_links(backlinks)
-        export_to_csv(backlinks)
-        return render_template("results.html", backlinks=backlinks, toxic_links=toxic_links)
+        try:
+            domain = request.form["domain"]
+            print(f"Form submitted with domain: {domain}")  # Debugging statement
+            backlinks = fetch_backlinks(domain)
+            print(f"Backlinks fetched: {backlinks}")  # Debugging statement
+            toxic_links = identify_toxic_links(backlinks)
+            print(f"Toxic links identified: {toxic_links}")  # Debugging statement
+            export_to_csv(backlinks)
+            return render_template("results.html", backlinks=backlinks, toxic_links=toxic_links)
+        except Exception as e:
+            print(f"An error occurred: {e}")  # Debugging statement
+            return "An error occurred. Please check the logs.", 500
     return render_template("index.html")
 
 # Download CSV file
