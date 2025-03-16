@@ -8,9 +8,12 @@ app = Flask(__name__)
 def fetch_backlinks(domain):
     mock_api_url = "https://8708051d-256c-45b7-9bc7-6d5b783e9cd0.mock.pstmn.io/"  # Your mock server URL
     try:
+        print(f"Fetching backlinks for domain: {domain}")  # Debugging statement
         response = requests.get(mock_api_url)
+        print(f"API Response Status Code: {response.status_code}")  # Debugging statement
         if response.status_code == 200:
             data = response.json()
+            print(f"API Response Data: {data}")  # Debugging statement
             # Simulate dynamic behavior by including the domain in the response
             for i, link in enumerate(data.get("backlinks", [])):
                 link["url"] = f"https://{domain}/backlink{i+1}"  # Fix URL formatting
@@ -43,6 +46,7 @@ def export_to_csv(backlinks, filename="backlinks.csv"):
 def index():
     if request.method == "POST":
         domain = request.form["domain"]
+        print(f"Form submitted with domain: {domain}")  # Debugging statement
         backlinks = fetch_backlinks(domain)
         toxic_links = identify_toxic_links(backlinks)
         export_to_csv(backlinks)
